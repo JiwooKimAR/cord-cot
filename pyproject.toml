@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crr"
+version = "1.0.0"
+description = "Causally Redundant Reasoning - CORD dual-disruption shortcut-tendency metric for CoT"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+# Core (analysis/metric) deps only - heavy measurement deps live in [measure].
+dependencies = [
+    "numpy>=2.0",  # np.trapezoid
+]
+
+[project.optional-dependencies]
+# Needed only to RUN the measurement; not for the metric. Lower bounds are the
+# tested versions (torch 2.10.0, transformers 4.57.6, vLLM 0.19.0); the vLLM
+# bound is capped because model unloading uses vLLM v1 engine internals.
+measure = [
+    "torch>=2.10",
+    "transformers>=4.57,<5",
+    "vllm>=0.19,<0.20",
+    "accelerate>=1.0",
+]
+# Reproduction scripts (scripts/): dataset download and table statistics.
+repro = [
+    "datasets>=2.18",
+    "scipy>=1.11",
+]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+include = ["crr*"]
+
+[tool.setuptools.package-data]
+crr = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

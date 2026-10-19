@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+# default output directory of the scripts, and the released measurement outputs
+results/
+paper_results/
